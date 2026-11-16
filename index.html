@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026 Annual Review | Habitat</title>
+  <meta name="description" content="2026 plan vs actual: timeline, completions, wins, pivots and daily habits." />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>window.__API_BASE__ = 'https://annual-results-dashboard.pplx.app/port/5000';</script>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div>
+        <h1>2026 Annual Review</h1>
+        <p class="sub">Plan vs actual <span id="year-progress" class="mono" data-testid="text-year-progress"></span></p>
+      </div>
+      <div class="top-actions">
+        <span id="updated" class="muted" data-testid="text-updated"></span>
+        <button id="refresh" type="button" data-testid="button-refresh">Refresh</button>
+      </div>
+    </header>
+
+    <div id="status" class="status" role="status" data-testid="status-load">Loading your 2026 data…</div>
+
+    <section id="kpis" class="kpis" aria-label="Planned vs completed"></section>
+
+    <section class="card">
+      <div class="card-head"><h2>The plan</h2><div class="legend"><span class="lg planned"></span>Planned <span class="lg done"></span>Done <span class="lg late"></span>Past due <span class="lg today"></span>Today</div></div>
+      <div id="timeline" class="timeline" data-testid="timeline"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Planned vs actual by quarter</h2></div>
+      <div id="quarters" class="quarters"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Daily habits</h2><span id="habit-summary" class="muted mono"></span></div>
+      <div id="heatmap" class="heatmap" data-testid="heatmap"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Results</h2>
+        <div class="tabs" role="tablist" id="tabs"></div>
+      </div>
+      <div id="journal" class="journal"></div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
