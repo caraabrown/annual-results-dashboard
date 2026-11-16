@@ -46,6 +46,7 @@
 
   function state(it, today) {
     if (it.done) return "done";
+    if (it.dropped) return "dropped";
     if (it.end && it.end < today) return "late";
     return "planned";
   }
@@ -73,6 +74,12 @@
       else { val = `<span class="num">${v.done}</span> <small>of ${v.total} done</small>`; p = pct(v.done, v.total); }
       const id = label.toLowerCase().replace(/\s+/g, "-");
       return `<div class="kpi" data-testid="kpi-${id}"><div class="label">${esc(label)}</div><div class="value">${val}</div>${p != null ? `<div class="bar"><i style="width:${(p * 100).toFixed(1)}%"></i></div>` : ""}</div>`;
+    }).join("");
+
+    // Planned / Pop Up / Completed / Dropped checkboxes from each database
+    $("breakdown").innerHTML = [["Goals", D.goals], ["Projects", D.projects], ["Milestones", D.milestones]].map(([n, arr]) => {
+      const c = (f) => arr.filter(f).length;
+      return `<tr data-testid="row-breakdown-${n.toLowerCase()}"><th scope="row">${n}</th><td>${c((x) => x.planned)}</td><td>${c((x) => x.popup)}</td><td>${c((x) => x.done)}</td><td>${c((x) => x.dropped)}</td></tr>`;
     }).join("");
 
     renderTimeline(D, today, Y);
@@ -107,7 +114,7 @@
         let mark = "";
         const tip = esc(`${it.name}${it.status ? " · " + it.status : ""}${it.start ? " · " + fmt(it.start) : ""}${it.end && it.end !== it.start ? " → " + fmt(it.end) : ""}`);
         if (it.start || it.end) {
-          if (kind === "dot") {
+          if (kind === "dot" || !it.start) {
             const x = yearFrac(it.end || it.start, Y, false);
             mark = `<a class="tl-dot ${st}" href="${esc(it.url)}" target="_blank" rel="noopener" style="left:${L(x)}" title="${tip}"></a>`;
           } else {
